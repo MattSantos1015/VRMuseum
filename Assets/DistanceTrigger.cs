@@ -6,6 +6,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class DistanceTrigger : MonoBehaviour
 {
+    
+
     [SerializeField]
     private Transform target;
     [SerializeField]
@@ -14,16 +16,17 @@ public class DistanceTrigger : MonoBehaviour
     private float activationDelay = 10.0f;
     [SerializeField]
    
-    private string triggerName = "NextAnim";
+    private string triggerName = "startAnim";
     
     private float timer;
 
     private Animator anim;
+    private AudioSource aud;
 
-    // Start is called before the first frame update
     void Start()
     {
         anim = this.GetComponent<Animator>();
+        aud = this.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -39,6 +42,7 @@ public class DistanceTrigger : MonoBehaviour
     void Activate()
     {
         anim.SetTrigger(triggerName);
+        aud.Play();
     }
 
     private void OnDrawGizmos()
