@@ -1,35 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
+[RequireComponent(typeof(LineRenderer))]
 public class BowString : MonoBehaviour
 {
     [SerializeField]
     private Transform endpoint_1, endpoint_2;
 
-    private LineRenderer bowString;
+    private LineRenderer lineRenderer;
 
-    private void Awake(){
-        bowString = GetComponent<LineRenderer>();
+    private void Awake()
+    {
+        lineRenderer = GetComponent<LineRenderer>();
     }
-    public void CreateString(Vector3? midPosition){
-        Vector3[]linePoints = new Vector3[midPosition == null ? 2 : 3];
+
+    public void CreateString(Vector3? midPosition)
+    {
+        Vector3[] linePoints = new Vector3[midPosition == null ? 2 : 3];
         linePoints[0] = endpoint_1.localPosition;
-           if (midPosition != null){
+        if (midPosition != null)
+        {
             linePoints[1] = transform.InverseTransformPoint(midPosition.Value);
-           } 
-            linePoints[1] = endpoint_2.localPosition;
-          
-        bowString.positionCount = linePoints.Length;
-            bowString.SetPositions(linePoints);
+        }
+        linePoints[^1] = endpoint_2.localPosition;
+
+        lineRenderer.positionCount = linePoints.Length;
+        lineRenderer.SetPositions(linePoints);
     }
 
-
-    void Start()
+    private void Start()
     {
         CreateString(null);
     }
-
-   
 }
